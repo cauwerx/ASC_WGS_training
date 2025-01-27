@@ -7,7 +7,7 @@ version 1.0
 workflow FilterVcf {
   input {
     File vcf_input
-    File vcf_output
+    String vcf_output
     Int disk_size_gb
     Int? machine_mem_mb
     String docker
@@ -33,7 +33,7 @@ workflow FilterVcf {
 task FilterVcfTask {
   input {
     File vcf_input
-    File vcf_output
+    String vcf_output
     Int disk_size_gb
     Int? machine_mem_mb
     String docker
