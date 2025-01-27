@@ -13,7 +13,7 @@ workflow filter_vcf {
     String docker
   }
 
-  call filter_vcf_task {
+  call FilterVcfTask {
     input:
       vcf_input = vcf_input,
       vcf_output = vcf_output,
@@ -21,37 +21,48 @@ workflow filter_vcf {
       machine_mem_mb = machine_mem_mb,
       docker = docker
   }
+  output {
+    File filtered_vcf = FilterVcfTask.vcf_output
+  }
 }
 
 #######################
 ## Tasks
 #######################
 
-task filter_vcf_task {
+task FilterVcfTask {
   input {
     File vcf_input
     File vcf_output
+    Int disk_size_gb
+    Int? machine_mem_mb
+    String docker
   }
 
-  command { # Need the <<< >>> ?
+  command  <<<
+    set -o errexit
+    set -o nounset
+    set -o pipefail
+
     bcftools view -i '
       AF[0] > 0.05 && 
       INFO/SVTYPE="DEL" && 
       FILTER="PASS" && 
       (INFO/EVIDENCE ~ "RD" && (INFO/EVIDENCE ~ "SR" || INFO/EVIDENCE ~ "PE"))
-    ' ${vcf_input} -o ${vcf_output}
-  }
+    ' ~{vcf_input} -o ~{vcf_output}
+    >>> 
 
-  output { # Should this be in task or workflow?
+  output {
     File filtered_vcf = vcf_output
   }
 
-  runtime { # Is this the approporiate amount?
+  runtime {
     memory: "~{machine_mem_mb} MiB"
     cpu: "1"
     bootDiskSizeGb: 15
     disks: "local-disk " + disk_size_gb + " HDD"
-    preemptible: 1
+    preemptible: 3
+    maxRetries: 1
     docker: "bcftools/bcftools"
   }
 }
