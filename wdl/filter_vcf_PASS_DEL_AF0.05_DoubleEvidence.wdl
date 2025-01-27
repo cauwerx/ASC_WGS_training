@@ -4,7 +4,7 @@ version 1.0
 ## This is the workflow
 #######################
 
-workflow filter_vcf {
+workflow FilterVcf {
   input {
     File vcf_input
     File vcf_output
@@ -22,7 +22,7 @@ workflow filter_vcf {
       docker = docker
   }
   output {
-    File filtered_vcf = FilterVcfTask.vcf_output
+    File filtered_vcf = FilterVcfTask.filtered_vcf
   }
 }
 
