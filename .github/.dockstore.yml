@@ -1,5 +1,5 @@
 version: 1.2
-worfflows:
+workflows:
   - name: filter_vcf
     subclass: WDL
     primaryDescriptorPath: /wdl/filter_vcf_PASS_DEL_AF0.05_DoubleEvidence.wdl
