@@ -63,6 +63,6 @@ task FilterVcfTask {
     disks: "local-disk " + disk_size_gb + " HDD"
     preemptible: 3
     maxRetries: 1
-    docker: "bcftools/bcftools"
+    docker: docker
   }
 }
