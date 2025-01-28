@@ -9,7 +9,7 @@ workflow FilterVcf {
     File vcf_input
     String vcf_output
     Int disk_size_gb
-    Int? machine_mem_mb
+    Int? machine_mem_gb
     String docker
   }
 
@@ -18,7 +18,7 @@ workflow FilterVcf {
       vcf_input = vcf_input,
       vcf_output = vcf_output,
       disk_size_gb = disk_size_gb,
-      machine_mem_mb = machine_mem_mb,
+      machine_mem_gb = machine_mem_gb,
       docker = docker
   }
   output {
@@ -35,7 +35,7 @@ task FilterVcfTask {
     File vcf_input
     String vcf_output
     Int disk_size_gb
-    Int? machine_mem_mb
+    Int? machine_mem_gb
     String docker
   }
 
@@ -57,7 +57,7 @@ task FilterVcfTask {
   }
 
   runtime {
-    memory: "~{machine_mem_mb}MiB"
+    memory: 5G
     cpu: 1
     bootDiskSizeGb: 15
     disks: 'local-disk ${disk_size_gb} HDD'
