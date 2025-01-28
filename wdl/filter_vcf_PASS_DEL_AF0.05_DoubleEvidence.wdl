@@ -57,10 +57,10 @@ task FilterVcfTask {
   }
 
   runtime {
-    memory: "~{machine_mem_mb} MiB"
-    cpu: "1"
+    memory: "~{machine_mem_mb}MiB"
+    cpu: 1
     bootDiskSizeGb: 15
-    disks: "local-disk " + disk_size_gb + " HDD"
+    disks: 'local-disk ${disk_size_gb} HDD'
     preemptible: 3
     maxRetries: 1
     docker: docker
