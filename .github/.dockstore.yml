@@ -2,7 +2,7 @@ version: 1.2
 workflows:
   - name: FilterVcf
     subclass: WDL
-    primaryDescriptorPath: /wdl/filter_vcf_PASS_CNV_AF0.05.wdl
+    primaryDescriptorPath: /wdl/filter_vcf_ForRelatedness.wdl
     filters:
       branches:
         - main
