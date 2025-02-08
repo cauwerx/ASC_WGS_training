@@ -44,13 +44,13 @@ task FilterVcfTask {
     set -o nounset
     set -o pipefail
 
-    bcftools view -i '
-      AF>=0.00015 && 
-      FILTER="PASS" && 
-      QUAL>=100 && 
-      !(INFO/PCRPLUS_DEPLETED) && !(INFO/UNSTABLE_AF_PCRPLUS) && !(INFO/VARIABLE_ACROSS_BATCHES) && 
-      GT!="./." && 
-      CHROM!="X" && CHROM!="Y"
+    bcftools filter -i '
+    AF>=0.00015 && 
+    FILTER=="PASS" && 
+    QUAL>=100 && 
+    !(INFO/PCRPLUS_DEPLETED) && !(INFO/UNSTABLE_AF_PCRPLUS) && !(INFO/VARIABLE_ACROSS_BATCHES) && 
+    GT!="./." && 
+    CHROM!="X" && CHROM!="Y"
     ' ~{vcf_input} | bcftools view -Oz -o ~{vcf_output}
     >>> 
 
