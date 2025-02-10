@@ -45,7 +45,7 @@ task FilterVcfTask {
     set -o pipefail
 
     bcftools view -i '
-    AF[0]>=0.00015 && 
+    AF[0]>=0.00005 && 
     FILTER=="PASS" && 
     QUAL>=100 &&  
     GT!="./." && 
